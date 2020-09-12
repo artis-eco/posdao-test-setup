@@ -29,22 +29,14 @@ function leftTrimAddress(address) {
 }
 
 async function main() {
-  let specFile = await readFile(__dirname + '/../posdao-contracts/spec.json', 'UTF-8');
+  let specFile = await readFile(__dirname + '/../posdao-contracts/spec_hbbft.json', 'UTF-8');
   assert(typeof specFile === 'string');
   specFile = JSON.parse(specFile);
-  assert(specFile.engine.authorityRound.params.stepDuration != null);
 
-  // Set step duration map for testing purposes
-  specFile.engine.authorityRound.params.stepDuration = {
-    "0": 5
-  };
-  // switch to another duration in 120 seconds
-  const newStepDurationTimestamp = Math.round((Date.now() / 1000 + 120) / 10) * 10;
-  specFile.engine.authorityRound.params.stepDuration[newStepDurationTimestamp] = 4;
-  console.log('Step duration will be changed at ', new Date(newStepDurationTimestamp * 1000).toLocaleTimeString('en-US'));
+  /*
 
   const exec = promisify(require('child_process').exec);
-  const { stdout, stderr } = await exec('../parity-ethereum/target/release/parity --version');
+  const { stdout, stderr } = await exec('./openethereum-hbbft --version');
 
   assert(!stderr);
 
@@ -65,12 +57,6 @@ async function main() {
   }
 
   if (isVersionGte(2,7,0)) { // if this is Parity Ethereum >= v2.7.0
-    if (!isVersionGte(2,7,3)) { // if this is Parity Ethereum < v2.7.3
-      // Remove `posdaoTransition` option as it is not released yet.
-      // Waiting for https://github.com/paritytech/parity-ethereum/pull/11245 to be included to release.
-      delete specFile.engine.authorityRound.params.posdaoTransition;
-    }
-
     // Apply a new format to spec.json (the new format is actual beginning from Parity 2.6.5-beta)
     const accounts = Object.keys(specFile.accounts);
     for (let i = 0; i < accounts.length; i++) {
@@ -85,6 +71,8 @@ async function main() {
       }
     }
   }
+
+   */
 
   await promisify(fs.writeFile)(__dirname + '/../parity-data/spec.json', JSON.stringify(specFile, null, '  '), 'UTF-8');
 }
