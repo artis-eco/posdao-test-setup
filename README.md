@@ -6,5 +6,4 @@ This version is for testing genesis initialization with the [hbbft posdao contra
 ## Requirements
 
 * A binary `openethereum-hbbft` in the project root folder (can also be a symlink).
-* A config file for the KeyGenHistory contract (original or symlink) inside the sub-folder `posdao-contracts`.
-
+* A config file for the KeyGenHistory contract (original or symlink) inside the sub-folder `posdao-contracts` (you may also copy / link the example file `keygen_history_single.json`).
